@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "1. Extrair frames",         "type": "shell", "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe pipeline.py extract", "problemMatcher": [] },
+    { "label": "1b. Extrair frames (refazer)", "type": "shell", "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe pipeline.py extract --force", "problemMatcher": [] },
+    { "label": "2. Gerar lotes para o CVAT", "type": "shell", "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe pipeline.py pack", "problemMatcher": [] },
+    { "label": "3. Validar, dividir e gerar relatório", "type": "shell", "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe pipeline.py build", "problemMatcher": [] },
+    { "label": "4. Enviar dataset ao Drive (Colab)", "type": "shell", "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe pipeline.py sync", "problemMatcher": [] },
+    { "label": "5. Trazer resultados do treino", "type": "shell", "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe pipeline.py fetch", "problemMatcher": [] }
+  ]
+}

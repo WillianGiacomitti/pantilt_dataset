@@ -1,0 +1,54 @@
+# ===========================================================================
+# Configuração central da pipeline. Todos os limiares ficam aqui.
+# ===========================================================================
+
+# A ORDEM define o id da classe (0, 1, 2, 3). Não mude depois de anotar.
+classes = [
+  "amortecedor_vibracao",
+  "esfera_sinalizacao",
+  "isolador_bastao",
+  "isolador_disco",
+]
+
+[paths]
+videos      = "data/videos"        # coloque seus vídeos aqui
+frames      = "data/frames"        # frames selecionados + manifest.csv
+cvat_upload = "data/cvat_upload"   # zips de imagens para subir no CVAT
+cvat_export = "data/cvat_export"   # zips exportados do CVAT (YOLO 1.1)
+dataset     = "data/dataset"       # dataset final train/val/test
+reports     = "reports"
+
+[extract]
+sample_fps           = 4     # frames/s lidos do vídeo (30 fps -> ~1 a cada 7 frames)
+min_brightness       = 20    # descarta frames quase pretos (0-255)
+blur_rel_threshold   = 0.5   # descarta frames com nitidez < 50% do percentil 75 do próprio vídeo
+blur_abs_min         = 0.0   # piso absoluto opcional (var. do Laplaciano). Deixe 0: cenas lisas de
+                             # laboratório têm valores baixos mesmo quando nítidas
+hash_threshold       = 10    # distância de Hamming (0-64) para considerar "mesma cena" em sequência
+feature_min_distance = 0.12  # seleção por diversidade: para quando o frame mais distinto restante
+                             # já está mais perto que isso dos escolhidos (maior = mais rigoroso)
+max_frames           = 600   # teto de frames NOVOS selecionados por execução do extract
+                             # (sobrescreva com: extract --max-frames N)
+jpeg_quality         = 95
+keep_rejected        = false # true = guarda os descartados em data/frames/rejected/<motivo>/
+
+[cvat]
+batch_size = 600             # imagens por zip/tarefa NOVO (lotes já criados não mudam)
+                             # (sobrescreva com: pack --batch-size N)
+max_side   = 0               # >0 reduz o lado maior das imagens SÓ nos zips do CVAT (ex.: 1280).
+                             # Os labels YOLO são normalizados, então valem para a imagem original.
+
+[split]
+ratios     = { train = 0.7, val = 0.2, test = 0.1 }
+seed       = 42
+iterations = 20000           # tentativas aleatórias de agrupar vídeos para equilibrar os splits
+
+[targets]
+min_instances_per_class = 150
+background_fraction     = 0.05   # fração mínima de imagens sem nenhum objeto
+
+[colab]
+# Pasta do Google Drive sincronizada no Windows (Google Drive para computador).
+# Ajuste para o caminho real. Se ela não existir, o dataset.zip fica em dist/ para upload manual.
+drive_dir = "G:/Meu Drive/TCC"
+run_name  = "yolo11n_v1"
