@@ -1,0 +1,12 @@
+{
+  "mAP50": 0.9907321428571428,
+  "mAP50_95": 0.7362722936291435,
+  "precision": 0.9832025387984101,
+  "recall": 0.9692697417706297,
+  "per_class_mAP50": {
+    "amortecedor_vibracao": 0.9854285714285713,
+    "esfera_sinalizacao": 0.995,
+    "isolador_bastao": 0.995,
+    "isolador_disco": 0.9874999999999999
+  }
+}
